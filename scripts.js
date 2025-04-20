@@ -69,3 +69,40 @@ const products = [
   { product: 'coffee', price: 10 },
   { product: 'tea', price: '' },
 ];
+
+console.log((() => {
+  // Log item names //
+  products.forEach(item => console.log(item.product));
+
+  // Filter products with short names //
+  const shortProducts = products.filter(item => item.product.length <= 5);
+
+  // Price manipulation using reduce //
+  const pricedProducts = products
+  .filter(item => typeof item.price === 'number' || item.price.trim() !== '')
+  .map(item => ({ ...item, price: Number(item.price) }));
+
+  const totalPrice = pricedProducts.reduce((total, item) => total + item.price, 0);
+
+  // Concatenate product names using reduce //
+  const concatenatedNames = products.reduce((acc, item) => acc + item.product, '');
+
+  // Find price extremes //
+  const prices = pricedProducts.map( item => item.price);
+  const priceExtremes = `Highest: ${Math.max(...prices)}. Lowest: ${Math.min(...prices)}.`;
+ // Object transformation
+  const transformedProducts = products.map(({ product, price }) => ({
+    name: product,
+    cost: price
+  }));
+
+  // Return all the data as object //
+  return {
+    shortProducts,
+    totalPrice,
+    concatenatedNames,
+    priceExtremes,
+    transformedProducts
+  };
+})());
+
